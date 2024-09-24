@@ -1,0 +1,3 @@
+# Admin - pro
+
+``` npm install ```
