@@ -1,13 +1,15 @@
 const { response } = require("express");
-const Medico = require('../models/medicos')
+const Medico = require("../models/medicos");
 
-
-const getMedicos = (req, res = response) => {
-    return res.json({
-        ok: true,
-        msg: 'getMedicos'
-    })
-}
+const getMedicos = async (req, res = response) => {
+  const medicos = await Medico.find()
+    .populate("usuario", "nombre img")
+    .populate("hospital", "nombre img");
+  return res.json({
+    ok: true,
+    medicos,
+  });
+};
 
 const crearMedico = async (req, res = response) => {
   const uid = req.uid;
@@ -45,8 +47,8 @@ const borrarMedico = (req, res = response) => {
 };
 
 module.exports = {
-    getMedicos,
-    crearMedico,
-    actualizarMedico,
-    borrarMedico
-}
+  getMedicos,
+  crearMedico,
+  actualizarMedico,
+  borrarMedico,
+};
