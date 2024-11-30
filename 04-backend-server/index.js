@@ -7,8 +7,16 @@ const { dbConection } = require("./database/config");
 // crear el servicio de express
 const app = express();
 
+const corsOptions = {
+  origin: "http://localhost:4200", // Altere conforme necessário
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true, // Permitir cookies, se necessário
+};
+
 // configurar cors
-app.use(cors());
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions))
 
 // lectura y parseo del body
 app.use(express.json());
@@ -20,7 +28,7 @@ dbConection();
 app.use( express.static('public') );
 
 // Rutas
-app.use( '/api/usuarios', require('./routes/usuarios') );
+app.use( '/api/usuarios',require('./routes/usuarios') );
 app.use('/api/hospitales', require('./routes/hospitales'));
 app.use('/api/medicos', require('./routes/medicos'));
 app.use( '/api/login', require('./routes/auth') );
