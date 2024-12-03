@@ -6,6 +6,7 @@
   <title>03Adminpro</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://accounts.google.com/gsi/client" async></script>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!-- Favicon icon -->
   <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon.png">
@@ -15,11 +16,26 @@
   <link href="./assets/css/style.css" rel="stylesheet">
   <!-- You can change the theme colors from here -->
   <link href="./assets/css/colors/default-dark.css" id="theme" rel="stylesheet">
-
 </head>
 
 <body class="fix-header card-no-border fix-sidebar">
-
+   <!-- <script>
+      function handleCredentialResponse(response) {
+        console.log("Encoded JWT ID token: " + response.credential);
+      }
+      window.onload = function () {
+        google.accounts.id.initialize({
+          client_id: "879582612969-4j43lmdap0lsd7jm1efko2945vf5j00p.apps.googleusercontent.com"
+          callback: handleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+          document.getElementById("buttonDiv"),
+          { theme: "outline", size: "large" }  // customization attributes
+        );
+        google.accounts.id.prompt(); // also display the One Tap dialog
+      }
+    </script>
+    <div id="buttonDiv"></div> -->
   <!-- ============================================================== -->
   <!-- Preloader - style you can find in spinners.css -->
   <!-- ============================================================== -->

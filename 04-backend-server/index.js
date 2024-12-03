@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 
+
 const cors = require("cors");
 const { dbConection } = require("./database/config");
 
@@ -9,14 +10,12 @@ const app = express();
 
 const corsOptions = {
   origin: "http://localhost:4200", // Altere conforme necessário
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true, // Permitir cookies, se necessário
 };
 
 // configurar cors
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions))
+
 
 // lectura y parseo del body
 app.use(express.json());

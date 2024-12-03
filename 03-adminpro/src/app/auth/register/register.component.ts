@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2';
 export class RegisterComponent {
   private fb = inject(FormBuilder);
   private usuarioService = inject(UsuarioService);
+  private router = inject( Router )
   public formsubmitted = false;
 
   public registerForm = this.fb.group(
@@ -37,8 +39,7 @@ export class RegisterComponent {
     // realizar el posteo
     this.usuarioService.crearUsuario(this.registerForm.value).subscribe(
       (resp) => {
-        console.log('usuario creado');
-        console.log(resp);
+        this.router.navigateByUrl('/')
       },
       (err) => {
         // si sucede un error
