@@ -7,6 +7,8 @@ import { environment } from '../../environments/environment.development';
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interfaces';
 import { Router } from '@angular/router';
+import { Usuario } from '../models/usuario.model';
+import { PerfilForm } from '../interfaces/perfil-form.interface';
 
 declare const google: any;
 
@@ -19,6 +21,8 @@ export class UsuarioService {
   private http = inject(HttpClient);
   private router = inject(Router);
 
+  public usuario!: Usuario;
+
   logout() {
     localStorage.removeItem('token');
     this.router.navigateByUrl('/login');
@@ -27,21 +31,32 @@ export class UsuarioService {
     });
   }
 
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  get uid(): string {
+    return this.usuario.uid || '';
+  }
+
   validarToken(): Observable<boolean> {
-    const token = localStorage.getItem('token') || '';
+
     return this.http
       .get(`${base_url}/login/renew`, {
         headers: {
-          'x-token': token,
+          'x-token': this.token,
           'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': 'X-Requested-With,content-type'
+          'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
         },
       })
       .pipe(
-        tap((resp: any) => {
-          localStorage.setItem('token', resp.token);
+        map((resp: any) => {
+          const { token, usuarioDB} = resp;
+          const {email, google, nombre, role, img = '', uid} = usuarioDB;
+          this.usuario = new Usuario(nombre, email, '', img, google, role, uid);
+          localStorage.setItem('token', token);
+          return true;
         }),
-        map((resp) => true),
         catchError(error => of(false) )
       );
   }
@@ -56,6 +71,20 @@ export class UsuarioService {
           localStorage.setItem('token', res.token);
         })
       );
+  }
+
+  actualizarPerfil( data: PerfilForm ) {
+    data = {
+      ...data,
+      role: this.usuario.role
+    }
+    return this.http.put(`${base_url}/usuarios/${this.uid}`, data, {
+      headers: {
+        'x-token': this.token,
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'X-Requested-With,content-type',
+      },
+    });
   }
 
   login(formData: LoginForm) {

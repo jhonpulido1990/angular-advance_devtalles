@@ -7,6 +7,7 @@ import { ProgressComponent } from './progress/progress.component';
 import { Grafica1Component } from './grafica1/grafica1.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { autGuard } from '../guards/aut.guard';
+import { PerfilComponent } from './perfil/perfil.component';
 
 
 const routes: Routes = [
@@ -15,10 +16,11 @@ const routes: Routes = [
     component: PagesComponent,
     canActivate: [autGuard],
     children: [
-      { path: '', component: DashboardComponent },
-      { path: 'progress', component: ProgressComponent },
-      { path: 'grafica1', component: Grafica1Component },
-      { path: 'promesas', component: PromesasComponent }
+      { path: '', component: DashboardComponent, data: { titulo: 'Dasboard' } },
+      { path: 'progress', component: ProgressComponent, data: { titulo: 'ProgressBar' } },
+      { path: 'grafica1', component: Grafica1Component, data: { titulo:'Grafica #1' } },
+      { path: 'promesas', component: PromesasComponent, data: { titulo: 'Promesas' } },
+      { path: 'perfil', component: PerfilComponent, data: { titulo: 'Perfil de Usuario' } }
     ],
   },
 ];
