@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '../components/components.module';
 import { PromesasComponent } from './promesas/promesas.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UsuariosComponent } from './mantenimiento/usuarios/usuarios.component';
 
 @NgModule({
   declarations: [
@@ -19,12 +20,16 @@ import { PerfilComponent } from './perfil/perfil.component';
     PagesComponent,
     PromesasComponent,
     PerfilComponent,
+    UsuariosComponent,
   ],
   exports: [
     DashboardComponent,
     ProgressComponent,
     Grafica1Component,
     PagesComponent,
+    PromesasComponent,
+    PerfilComponent,
+    UsuariosComponent,
   ],
   imports: [
     CommonModule,
